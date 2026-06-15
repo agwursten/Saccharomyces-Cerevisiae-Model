@@ -15,8 +15,8 @@ Incluye:
 - Supuestos bióticos y abióticos del modelo documentados en la sección de teoría.
 
 ---
----
-<img width="1249" height="507" alt="{355A7183-04D2-4B9E-8DFB-2CF353C1BA5E}" src="https://github.com/user-attachments/assets/342bbe64-48fe-492e-a68e-123d9bf0fb62" />
+<img width="629" height="523" alt="{9C061F22-F5AC-49AE-89AC-8734E2E03E3B}" src="https://github.com/user-attachments/assets/036025ae-03cd-4224-8239-bbcc6e8261b8" />
+
 ---
 ## Método numérico
 
