@@ -20,7 +20,7 @@ Aplicación web para simular y explorar el modelo bioquímicamente estructurado 
 ---
 
 <p align="center">
-<img width="700" height="523" alt="{9C061F22-F5AC-49AE-89AC-8734E2E03E3B}" src="https://github.com/user-attachments/assets/036025ae-03cd-4224-8239-bbcc6e8261b8" />
+<img width="700" height="526" alt="{74026B87-E51C-45E8-A255-BFA8787DA18C}" src="https://github.com/user-attachments/assets/67ddab30-5ee0-487d-89e1-565695cece70" />
 </p> 
 
 ---
