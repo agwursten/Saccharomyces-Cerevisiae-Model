@@ -7,7 +7,7 @@ Aplicación web para simular y explorar el modelo bioquímicamente estructurado 
 Incluye:
 
 - Reproducción automática de las Figuras 3, 4, 5, 10A, 10B y 11 del artículo (carga secuencial con barra de progreso).
-- Simulador de quimiostato en 4 pasos (Sf → análisis → retrato de fase → simulación dinámica).
+- Simulador de quimiostato en 4 pasos (Sf → análisis → simulación dinámica).
 - Simulación batch con métricas (biomasa máxima, tiempo de agotamiento de glucosa, etanol máximo).
 - Análisis automático de Dcrit, Dwashout, D óptima para biomasa y D óptima para productividad.
 - Editor de parámetros cinéticos con validación frontend + backend y botón **Restaurar valores del artículo**.
@@ -72,14 +72,14 @@ yeast_app/
 
 ## Instalación y ejecución
 
-Necesitás **Python ≥ 3.11** y **Node ≥ 18**.
+Primero necesitas tener instalado **Python ≥ 3.11** y **Node ≥ 18**. Luego sigue los pasos siguientes:
 
 ### 1. Backend
 
 ```bash
 cd backend
 python -m venv .venv
-source .venv/bin/activate            # Windows: .venv\Scripts\activate
+source .venv/bin/activate            # En Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn app:app --reload --port 8000
 ```
@@ -100,49 +100,3 @@ npm run dev
 Abrí `http://localhost:5173`.
 
 ---
-
-## Validación numérica
-
-Reproduciendo la Figura 3 del artículo a Sf = 15 g/L con **LSODA**:
-
-| Cantidad | Paper | LSODA |
-| --- | --- | --- |
-| Dcrit                | ~0.37 h⁻¹ | **0.36 h⁻¹**  |
-| Dwashout             | ~0.48 h⁻¹ | **0.50 h⁻¹**  |
-| Biomasa pico         | ~7.4 g/L  | **7.47 g/L**  |
-| Etanol pico          | ~4.5 g/L  | **4.5 g/L**   |
-
-Con **RK4** (`h=0.01`) los valores son numéricamente muy similares; con `h=0.02` ya aparecen errores notables cerca de Dcrit.
-
----
-
-## Endpoints REST
-
-| Método | Ruta | Descripción |
-| --- | --- | --- |
-| `GET`  | `/api/health` | Health-check |
-| `GET`  | `/api/parameters/defaults` | Parámetros y bounds |
-| `GET`  | `/api/parameters/info` | Descripción humana de cada parámetro |
-| `POST` | `/api/chemostat/dynamic` | Integración dinámica |
-| `POST` | `/api/chemostat/sweep` | Barrido de D + métricas |
-| `POST` | `/api/batch/simulate` | Simulación batch |
-| `POST` | `/api/bifurcation/diagram` | Continuación forward/backward |
-| `POST` | `/api/bifurcation/multiplicity_region` | Región de multiplicidad |
-| `GET`  | `/api/figures/fig3 … fig11` | Reproducción de figuras del paper (cacheadas tras primera llamada) |
-
-Todos los `POST` aceptan un campo opcional `overrides` con un sub-conjunto de los 37 parámetros para sobreescribir los del paper.
-
----
-
-## Notas técnicas
-
-- **Caché de figuras**: las figuras del paper se cachean en memoria tras la primera carga. La primera vez tarda ~2 min en total, después son instantáneas.
-- **Continuación warm-start**: en los barridos de D, el estado estacionario anterior se usa como condición inicial para el siguiente D. Esto captura correctamente la zona de multiplicidad.
-- **Continuación bidireccional**: el diagrama de bifurcación combina continuación forward (de D bajo a alto, partiendo del régimen oxidativo) y backward (de alto a bajo, partiendo del régimen oxido-reductivo).
-- **Estabilidad numérica**: si RK4 detecta divergencia (valores > 100 g/L o NaN) en un punto, retoma con paso h/4 automáticamente.
-
----
-
-## Licencia
-
-Código educativo. El modelo y los datos pertenecen a sus autores originales (Lei, Rotbøll, Jørgensen, 2001).
