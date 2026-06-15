@@ -4,6 +4,9 @@ Aplicación web para simular y explorar el modelo bioquímicamente estructurado 
 
 > Lei, F., Rotbøll, M., Jørgensen, S.B. *A biochemically structured model for Saccharomyces cerevisiae*, **Journal of Biotechnology 88 (2001) 205–221**.
 
+<img width="358" height="232" alt="{89015DF8-397D-4737-AD9A-93170A6E9F1C}" src="https://github.com/user-attachments/assets/c15b5ccc-9129-4ad7-b63a-e225fb0c12c4" />
+
+
 Incluye:
 
 - Reproducción automática de las Figuras 3, 4, 5, 10A, 10B y 11 del artículo (carga secuencial con barra de progreso).
@@ -15,7 +18,7 @@ Incluye:
 - Supuestos bióticos y abióticos del modelo documentados en la sección de teoría.
 
 ---
-<img width="629" height="523" alt="{9C061F22-F5AC-49AE-89AC-8734E2E03E3B}" src="https://github.com/user-attachments/assets/036025ae-03cd-4224-8239-bbcc6e8261b8" />
+<img width="800" height="523" alt="{9C061F22-F5AC-49AE-89AC-8734E2E03E3B}" src="https://github.com/user-attachments/assets/036025ae-03cd-4224-8239-bbcc6e8261b8" />
 
 ---
 ## Método numérico
