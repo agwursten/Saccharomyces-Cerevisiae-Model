@@ -1,4 +1,4 @@
-# Saccharomyces Cerevisiae Model Explorer
+# Saccharomyces Cerevisiae Model Explorer ⚗
 
 Aplicación web para simular y explorar el modelo bioquímicamente estructurado de *Saccharomyces cerevisiae* descrito en:
 
@@ -18,10 +18,11 @@ Aplicación web para simular y explorar el modelo bioquímicamente estructurado 
 - 📌  Supuestos bióticos y abióticos del modelo documentados en la sección de teoría.
 
 ---
-<img width="1000" height="523" alt="{9C061F22-F5AC-49AE-89AC-8734E2E03E3B}" src="https://github.com/user-attachments/assets/036025ae-03cd-4224-8239-bbcc6e8261b8" />
-
+<p align="center">
+<img width="700" height="523" alt="{9C061F22-F5AC-49AE-89AC-8734E2E03E3B}" src="https://github.com/user-attachments/assets/036025ae-03cd-4224-8239-bbcc6e8261b8" />
+</p>
 ---
-## Método numérico
+## 📈 Método numérico
 
 La aplicación soporta **dos solvers de EDOs**, seleccionables desde la sección **Parámetros**:
 
