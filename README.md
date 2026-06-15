@@ -76,6 +76,8 @@ Primero necesitas tener instalado **Python ≥ 3.11** y **Node ≥ 18**. Luego s
 
 ### 1. Backend
 
+En **una terminal abierta**:
+
 ```bash
 cd backend
 python -m venv .venv
@@ -89,7 +91,7 @@ Documentación interactiva: `http://127.0.0.1:8000/docs`.
 
 ### 2. Frontend
 
-En **otra terminal**:
+En **otra terminal abierta**:
 
 ```bash
 cd frontend
