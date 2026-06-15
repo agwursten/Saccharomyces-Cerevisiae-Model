@@ -15,7 +15,9 @@ Incluye:
 - Supuestos bióticos y abióticos del modelo documentados en la sección de teoría.
 
 ---
-
+---
+<img width="1249" height="507" alt="{355A7183-04D2-4B9E-8DFB-2CF353C1BA5E}" src="https://github.com/user-attachments/assets/342bbe64-48fe-492e-a68e-123d9bf0fb62" />
+---
 ## Método numérico
 
 La aplicación soporta **dos solvers de EDOs**, seleccionables desde la sección **Parámetros**:
