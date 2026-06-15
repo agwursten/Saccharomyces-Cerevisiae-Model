@@ -18,9 +18,11 @@ Aplicación web para simular y explorar el modelo bioquímicamente estructurado 
 - 📌  Supuestos bióticos y abióticos del modelo documentados en la sección de teoría.
 
 ---
+
 <p align="center">
 <img width="700" height="523" alt="{9C061F22-F5AC-49AE-89AC-8734E2E03E3B}" src="https://github.com/user-attachments/assets/036025ae-03cd-4224-8239-bbcc6e8261b8" />
-</p>
+</p> 
+
 ---
 ## 📈 Método numérico
 
