@@ -99,6 +99,8 @@ npm install
 npm run dev
 ```
 
+### 3. En el navegador
+
 Abrí `http://localhost:5173`.
 
 ---
