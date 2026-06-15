@@ -89,8 +89,9 @@ export default function BatchPage() {
                  alt="Esquema de reactor batch"
                  sx={{ height: 150, width: 'auto', objectFit: 'contain' }} />
             <Typography variant="caption" color="rgba(0,0,0,0.6)"
-                        sx={{ mt: 0.5, fontWeight: 500, letterSpacing: '0.05em' }}>
-              REACTOR BATCH · SIN ALIMENTACIÓN NI SALIDA
+                        sx={{ mt: 0.5, fontWeight: 500, letterSpacing: '0.05em',
+                              textAlign: 'center', px: 1 }}>
+              REACTOR BATCH · CARGA INICIAL DE SUSTRATO,<br />SIN APORTE NI SALIDA CONTINUOS
             </Typography>
           </Paper>
         </Grid>

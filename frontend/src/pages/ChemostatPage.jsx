@@ -47,7 +47,7 @@ export default function ChemostatPage() {
 
   // Paso 4
   const [D, setD] = useState(0.30);
-  const [tEnd, setTEnd] = useState(80);
+  const [tEnd, setTEnd] = useState(50);
   const [dynRun, setDynRun] = useState(false);
   const [dynamic, setDynamic] = useState(null);
 
@@ -189,6 +189,65 @@ export default function ChemostatPage() {
         </Grid>
       </Grid>
 
+      {/* ── ¿Qué es D? ───────────────────────────────────────────────────── */}
+      <Paper sx={{ p: 2.5, mb: 3, borderLeft: `3px solid ${palette.brand}` }}>
+        <Typography variant="overline" color="text.secondary">¿QUÉ ES LA TASA DE DILUCIÓN D?</Typography>
+        <Grid container spacing={2} sx={{ mt: 0.2 }} alignItems="center">
+          <Grid item xs={12} md={7}>
+            <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+              En un quimiostato continuo la velocidad a la que se renueva el contenido
+              del reactor se mide con la <b>tasa de dilución</b> D. Es el caudal
+              volumétrico que atraviesa el reactor (alimentación que entra = efluente
+              que sale, porque el volumen se mantiene constante) dividido por el
+              volumen útil del biorreactor. En estado estacionario D coincide
+              numéricamente con la velocidad específica de crecimiento de la población
+              (μ = D), por lo que controlar D equivale a fijar μ — uno de los motivos
+              por los que el quimiostato es tan usado para estudiar metabolismo
+              microbiano.
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <Box sx={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              gap: 1.5, p: 2, borderRadius: 1,
+              bgcolor: 'rgba(255,255,255,0.03)',
+              border: '1px dashed rgba(255,255,255,0.1)',
+              fontFamily: '"JetBrains Mono", monospace',
+              fontSize: '1.4rem',
+            }}>
+              <Box component="span">D&nbsp;=</Box>
+              {/* Fraction F/V using inline-grid: row 1 numerator, row 2 bar, row 3 denominator */}
+              <Box sx={{
+                display: 'inline-grid',
+                gridTemplateRows: 'auto auto auto',
+                justifyItems: 'center',
+                rowGap: 0,
+                lineHeight: 1.05,
+              }}>
+                <Box sx={{ px: 1 }}>F</Box>
+                <Box sx={{
+                  height: '1.5px',
+                  width: '100%',
+                  bgcolor: 'currentColor',
+                  my: '3px',
+                }} />
+                <Box sx={{ px: 1 }}>V</Box>
+              </Box>
+              <Box component="span" sx={{ ml: 1, fontSize: '0.85rem',
+                                          color: 'text.secondary' }}>
+                [ h⁻¹ ]
+              </Box>
+            </Box>
+            <Typography variant="caption" color="text.secondary"
+                        sx={{ display: 'block', textAlign: 'center', mt: 1.2,
+                              maxWidth: 360, mx: 'auto' }}>
+              F: caudal volumétrico de operación, L/h (igual a la entrada y a la salida)<br />
+              V: volumen útil del reactor, L
+            </Typography>
+          </Grid>
+        </Grid>
+      </Paper>
+
       <Stepper activeStep={step} alternativeLabel sx={{ mb: 3 }}>
         <Step><StepLabel>Elegí Sf</StepLabel></Step>
         <Step><StepLabel>Análisis de régimen</StepLabel></Step>
@@ -215,9 +274,6 @@ export default function ChemostatPage() {
               ]}
               sx={{ maxWidth: 600 }}
             />
-            <Typography variant="caption" color="text.secondary">
-              La multiplicidad no se observa por debajo de Sf ≈ 16 g/L (paper, Fig. 10B).
-            </Typography>
           </Box>
           <Stack direction="row" spacing={1}>
             <Button onClick={resetear} startIcon={<RestartAltIcon />}>Resetear</Button>

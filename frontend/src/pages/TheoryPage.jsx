@@ -103,7 +103,7 @@ export default function TheoryPage() {
       <Stack direction={{ xs: 'column', md: 'row' }} alignItems={{ md: 'flex-end' }}
              justifyContent="space-between" spacing={2} sx={{ mb: 3 }}>
         <Box>
-          <Typography variant="h3" sx={{ mt: 0.5 }}>Teoría y Validación</Typography>
+          <Typography variant="h3" sx={{ mt: 0.5 }}>Teoría y Reproducción</Typography>
           <Typography color="text.secondary" sx={{ maxWidth: 720, mt: 1 }}>
             Modelo bioquímicamente estructurado del crecimiento aerobio de
             <i> Saccharomyces cerevisiae</i> sobre glucosa y etanol —
@@ -146,7 +146,7 @@ export default function TheoryPage() {
       <Paper sx={{ p: { xs: 2, md: 3 }, mb: 3 }}>
         <Typography variant="overline" color="text.secondary">MAPA METABÓLICO</Typography>
         <Typography variant="h5" sx={{ mb: 2 }}>
-          Puntos de ramificación de piruvato y acetaldehído (Fig. 2 del artículo)
+          Puntos de ramificación de piruvato y acetaldehído
         </Typography>
         <Box sx={{
           display: 'flex', justifyContent: 'center',
@@ -237,17 +237,20 @@ export default function TheoryPage() {
             {BALANCES}
           </Box>
           <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            Coeficientes estequiométricos tomados de la Tabla 3 del artículo. μ = 0.732·r₇ + 0.619·r₈.
-            El sistema de EDOs se resuelve numéricamente (por defecto con LSODA adaptativo,
-            opcionalmente con Runge-Kutta clásico de 4° orden de paso fijo configurable en la sección
-            de Parámetros).
+            μ es la <b>velocidad específica de crecimiento</b> (h⁻¹) de la biomasa,
+            definida en este modelo como μ = 0.732·r₇ + 0.619·r₈; los coeficientes
+            0.732 y 0.619 son los rendimientos estequiométricos de biomasa por unidad
+            de glucosa (r₇) y de acetato (r₈) consumidos para anabolismo.
+            El sistema de EDOs se resuelve numéricamente (por defecto con LSODA
+            adaptativo, opcionalmente con Runge-Kutta clásico de 4° orden de paso fijo
+            configurable en la sección de Parámetros).
           </Typography>
         </AccordionDetails>
       </Accordion>
 
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="h6">Reacciones (Tabla 3 del artículo)</Typography>
+          <Typography variant="h6">Reacciones</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <TableContainer>

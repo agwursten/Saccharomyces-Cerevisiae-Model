@@ -6,7 +6,7 @@ import LightModeIcon from '@mui/icons-material/LightModeOutlined';
 import { palette } from '../theme/theme';
 
 const NAV = [
-  { to: '/',           label: 'Teoría y Validación' },
+  { to: '/',           label: 'Teoría y Reproducción' },
   { to: '/chemostat',  label: 'Quimiostato' },
   { to: '/batch',      label: 'Batch' },
   { to: '/parameters', label: 'Parámetros' },
