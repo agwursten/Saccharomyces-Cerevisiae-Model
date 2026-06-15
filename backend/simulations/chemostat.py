@@ -167,13 +167,26 @@ def steady_state_sweep(Sf: float,
 # Operating regime characterisation
 # ---------------------------------------------------------------------------
 def characterise_regime(sweep: Dict) -> Dict:
-    """Identify Dcrit, Dwashout, D_opt_biomass, D_opt_prod from a sweep."""
+    """Identify Dcrit, Dwashout, D_opt_biomass, D_opt_prod from a sweep.
+
+    Dcrit is defined as the smallest D at which the steady-state ethanol
+    concentration exceeds a meaningful threshold.  Because the maximum
+    achievable ethanol scales with the feed concentration Sf (paper's
+    Fig. 11 makes this point explicit), a fixed absolute threshold gives
+    spurious results: at high Sf, even sub-critical operating points show
+    tiny amounts of ethanol from numerical artefacts of the integration.
+
+    We therefore use a **relative** threshold of 5% of the maximum
+    steady-state ethanol observed in the sweep, with an absolute floor of
+    0.1 g/L so the criterion stays sensible at very small Sf.
+    """
     D   = np.array(sweep["D"])
     x   = np.array(sweep["x"])
     Et  = np.array(sweep["s_EtOH"])
     Pr  = np.array(sweep["productivity"])
 
-    eth_threshold = 0.05
+    eth_max = float(np.nanmax(Et))
+    eth_threshold = max(0.1, 0.05 * eth_max)
     crit_idx = np.where(Et > eth_threshold)[0]
     Dcrit = float(D[crit_idx[0]]) if len(crit_idx) else None
 
@@ -193,6 +206,6 @@ def characterise_regime(sweep: Dict) -> Dict:
         "D_opt_biomass":  _safe(D_opt_biomass),
         "D_opt_prod":     _safe(D_opt_prod),
         "x_max":          _safe(x_max),
-        "EtOH_max":       _safe(float(np.nanmax(Et))),
+        "EtOH_max":       _safe(eth_max),
         "productivity_max": _safe(float(np.nanmax(Pr))),
     }

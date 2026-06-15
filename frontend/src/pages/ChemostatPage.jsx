@@ -251,7 +251,7 @@ export default function ChemostatPage() {
       <Stepper activeStep={step} alternativeLabel sx={{ mb: 3 }}>
         <Step><StepLabel>Elegí Sf</StepLabel></Step>
         <Step><StepLabel>Análisis de régimen</StepLabel></Step>
-        <Step><StepLabel>Retrato de fase</StepLabel></Step>
+        <Step><StepLabel>Mapa de régimen</StepLabel></Step>
         <Step><StepLabel>Simulación dinámica</StepLabel></Step>
       </Stepper>
 
@@ -366,7 +366,7 @@ export default function ChemostatPage() {
           {/* ── Paso 3: Retrato de fase ──────────────────────────────────── */}
           <Paper sx={{ p: 3, mb: 3 }}>
             <Typography variant="overline" color="text.secondary">PASO 3</Typography>
-            <Typography variant="h6" sx={{ mb: 1 }}>Régimen de operación — retrato de fase</Typography>
+            <Typography variant="h6" sx={{ mb: 1 }}>Régimen de operación</Typography>
             <Stack direction="row" spacing={1.2} sx={{ mb: 1, flexWrap: 'wrap', gap: 1 }}>
               <Chip size="small" label="OXIDATIVO  D < Dcrit"
                     sx={{ bgcolor: `${palette.brand}22`, color: palette.brandLight }} />
@@ -382,7 +382,7 @@ export default function ChemostatPage() {
                     label="• • D para máx. productividad" />
             </Stack>
             <PlotCard
-              title="RETRATO DE FASE"
+              title="MAPA DE RÉGIMEN"
               subtitle="Biomasa · etanol · glucosa superpuestos"
               height={340}
               data={[
