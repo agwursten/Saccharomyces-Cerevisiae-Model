@@ -1,4 +1,4 @@
-# Yeast Model Explorer
+# Saccharomyces Cerevisiae Model Model Explorer
 
 Aplicación web para simular y explorar el modelo bioquímicamente estructurado de *Saccharomyces cerevisiae* descrito en:
 
@@ -81,6 +81,7 @@ En **una terminal abierta**:
 ```bash
 cd backend
 python -m venv .venv
+pip install -r requirements.txt
 source .venv/bin/activate            # En Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn app:app --reload --port 8000
