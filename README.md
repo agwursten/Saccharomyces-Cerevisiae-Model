@@ -1,4 +1,4 @@
-# Saccharomyces Cerevisiae Model Explorer ⚗
+# 🧪 Saccharomyces Cerevisiae Model Explorer ⚗
 
 Aplicación web para simular y explorar el modelo bioquímicamente estructurado de *Saccharomyces cerevisiae* descrito en:
 
