@@ -9,13 +9,13 @@ Aplicación web para simular y explorar el modelo bioquímicamente estructurado 
 
 📝 Incluye:
 
-📌  Reproducción automática de las Figuras 3, 4, 5, 10A, 10B y 11 del artículo (carga secuencial con barra de progreso).
-📌  Simulador de quimiostato en 4 pasos (Sf → análisis → simulación dinámica).
-📌  Simulación batch con métricas (biomasa máxima, tiempo de agotamiento de glucosa, etanol máximo).
-📌  Análisis automático de Dcrit, Dwashout, D óptima para biomasa y D óptima para productividad.
-📌  Editor de parámetros cinéticos con validación frontend + backend y botón **Restaurar valores del artículo**.
-📌  Tema claro/oscuro, diseño dashboard, gráficas sincronizadas con Plotly.
-📌  Supuestos bióticos y abióticos del modelo documentados en la sección de teoría.
+- 📌  Reproducción automática de las Figuras 3, 4, 5, 10A, 10B y 11 del artículo (carga secuencial con barra de progreso).
+- 📌  Simulador de quimiostato en 4 pasos (Sf → análisis → simulación dinámica).
+- 📌  Simulación batch con métricas (biomasa máxima, tiempo de agotamiento de glucosa, etanol máximo).
+- 📌  Análisis automático de Dcrit, Dwashout, D óptima para biomasa y D óptima para productividad.
+- 📌  Editor de parámetros cinéticos con validación frontend + backend y botón **Restaurar valores del artículo**.
+- 📌  Tema claro/oscuro, diseño dashboard, gráficas sincronizadas con Plotly.
+- 📌  Supuestos bióticos y abióticos del modelo documentados en la sección de teoría.
 
 ---
 <img width="1000" height="523" alt="{9C061F22-F5AC-49AE-89AC-8734E2E03E3B}" src="https://github.com/user-attachments/assets/036025ae-03cd-4224-8239-bbcc6e8261b8" />
