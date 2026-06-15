@@ -37,7 +37,7 @@ Implementación en `backend/simulations/rk4.py`. Paso recomendado: `h = 0.005–
 
 ---
 
-## Arquitectura
+## Estructura de Directorios del Proyecto
 
 ```
 yeast_app/
