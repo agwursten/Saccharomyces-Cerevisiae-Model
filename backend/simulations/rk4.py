@@ -1,9 +1,9 @@
 """
-Classical fourth-order Runge-Kutta integrator with fixed step size.
+Integrador clásico Runge-Kutta de cuarto orden con paso fijo.
 
-This is the standard RK4 method taught in any numerical-methods course
-and used here following the project requirement. For the system
-dy/dt = f(t, y) the per-step formula is::
+Es el método RK4 estándar enseñado en cualquier curso de métodos
+numéricos y usado aquí siguiendo el requisito del proyecto. Para el
+sistema dy/dt = f(t, y), la fórmula por paso es::
 
     k1 = f(t,         y)
     k2 = f(t + h/2,   y + h*k1/2)
@@ -11,7 +11,7 @@ dy/dt = f(t, y) the per-step formula is::
     k4 = f(t + h,     y + h*k3)
     y_{n+1} = y_n + (h/6) * (k1 + 2*k2 + 2*k3 + k4)
 
-Pre-allocated buffers are used to avoid per-step numpy allocations.
+Se usan buffers preasignados para evitar asignaciones de numpy en cada paso.
 """
 
 from __future__ import annotations
@@ -27,10 +27,10 @@ def rk4_integrate(f: Callable,
                   t_eval=None,
                   enforce_nonneg: bool = True) -> Tuple[np.ndarray, np.ndarray]:
     """
-    Integrate ``dy/dt = f(t, y, *args)`` with fixed-step RK4.
+    Integra ``dy/dt = f(t, y, *args)`` con RK4 de paso fijo.
 
-    The function ``f`` must accept an ``out=buffer`` keyword argument so
-    the same buffer can be reused for each k_i evaluation.
+    La función ``f`` debe aceptar un keyword argument ``out=buffer`` para
+    que el mismo buffer pueda reutilizarse en cada evaluación de k_i.
 
     Returns
     -------
@@ -41,7 +41,7 @@ def rk4_integrate(f: Callable,
     nstate = len(y0)
     y = np.asarray(y0, dtype=float).copy()
 
-    # Pre-allocated work buffers
+    # Buffers de trabajo preasignados
     k1 = np.empty(nstate)
     k2 = np.empty(nstate)
     k3 = np.empty(nstate)
@@ -52,7 +52,7 @@ def rk4_integrate(f: Callable,
     h_actual = (t_end - t0) / n_steps
 
     def step(t, hh):
-        """One RK4 step, updating y in place."""
+        """Un paso de RK4, actualizando y in place."""
         f(t, y, *args, out=k1)
         y_tmp[:] = y + 0.5 * hh * k1
         f(t + 0.5 * hh, y_tmp, *args, out=k2)

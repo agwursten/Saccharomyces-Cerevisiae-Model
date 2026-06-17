@@ -1,11 +1,12 @@
 """
-Bifurcation analysis: reproduce Fig. 10 and Fig. 11 of the paper by
-combining forward and backward continuation in D to expose the fold
-bifurcation.
+Análisis de bifurcación: reproduce las Fig. 10 y Fig. 11 del artículo
+combinando continuación hacia adelante y hacia atrás en D para evidenciar
+la bifurcación de pliegue (fold).
 
-Returns the four state variables of interest (x, Sacetald, SEtOH and
-Sacetate) for each continuation direction so the same call can populate
-Fig. 10A (biomass), Fig. 11 (acetaldehyde) and ethanol overlays.
+Retorna las cuatro variables de estado de interés (x, Sacetald, SEtOH y
+Sacetate) para cada dirección de continuación, de modo que la misma
+llamada pueda poblar la Fig. 10A (biomasa), la Fig. 11 (acetaldehído) y
+los overlays de etanol.
 """
 
 from __future__ import annotations
@@ -20,7 +21,7 @@ from simulations.chemostat import _settle_to_steady_state
 
 
 def _clean(arr):
-    """Replace NaN / inf with None so the result is JSON serialisable."""
+    """Reemplaza NaN / inf por None para que el resultado sea serializable en JSON."""
     return [None if (v is None or (isinstance(v, float) and not math.isfinite(v)))
             else float(v) for v in arr]
 
@@ -28,9 +29,9 @@ def _clean(arr):
 def _continuation(D_grid, Sf, p_tuple, y0, solver="lsoda", rk4_step=0.005,
                   t_max=120.0):
     """
-    Warm-start continuation: for each D, settle to the local stable
-    steady state starting from the previous one.  Returns x, acetaldehyde,
-    ethanol and acetate trajectories along the branch.
+    Continuación con arranque tibio (warm-start): para cada D, asienta el
+    estado estacionario local estable partiendo del anterior. Retorna las
+    trayectorias de x, acetaldehído, etanol y acetato a lo largo de la rama.
     """
     x_l, acet_l, eth_l, acetate_l = [], [], [], []
     y = y0.copy()
@@ -61,14 +62,14 @@ def bifurcation_diagram(Sf: float,
                         solver: str = "lsoda",
                         rk4_step: float = 0.005) -> Dict:
     """
-    Compute upper and lower steady-state branches by performing forward
-    (low->high D) and backward (high->low D) continuations.
+    Calcula las ramas superior e inferior de estado estacionario realizando
+    continuaciones hacia adelante (D bajo -> alto) y hacia atrás (D alto -> bajo).
     """
     p = parameters or DEFAULT_PARAMETERS
     p_tuple = params_to_tuple(p)
     D_grid = np.linspace(D_min, D_max, n)
 
-    # Forward continuation: oxidative branch
+    # Continuación hacia adelante: rama oxidativa
     y_low = state_to_vector({
         "s_glu": 0.01, "s_pyr": 0.0, "s_acetald": 0.0,
         "s_acetate": 0.0, "s_EtOH": 0.0,
@@ -78,7 +79,7 @@ def bifurcation_diagram(Sf: float,
         D_grid, Sf, p_tuple, y_low, solver=solver, rk4_step=rk4_step,
     )
 
-    # Backward continuation: heavily oxido-reductive starting state
+    # Continuación hacia atrás: estado inicial fuertemente óxido-reductivo
     y_high = state_to_vector({
         "s_glu": Sf * 0.10, "s_pyr": 0.05, "s_acetald": 0.005,
         "s_acetate": 0.15, "s_EtOH": Sf * 0.30,
@@ -107,8 +108,8 @@ def bifurcation_diagram(Sf: float,
 
 def multiplicity_region(Sf_values, parameters=None,
                         solver="lsoda", rk4_step=0.005):
-    """For each Sf, find the (D_low, D_high) interval where forward
-    and backward branches diverge by more than 0.3 g/L of biomass."""
+    """Para cada Sf, encuentra el intervalo (D_low, D_high) donde las ramas
+    forward y backward difieren en más de 0.3 g/L de biomasa."""
     p = parameters or DEFAULT_PARAMETERS
     D_min_list, D_max_list = [], []
     for Sf in Sf_values:

@@ -3,7 +3,7 @@ import { Card, CardContent, Box, Typography, Tooltip, IconButton } from '@mui/ma
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 /**
- * Compact metric card used in dashboards.
+ * Tarjeta compacta de métrica usada en los dashboards.
  */
 export default function MetricCard({ label, value, unit, info, accent }) {
   return (

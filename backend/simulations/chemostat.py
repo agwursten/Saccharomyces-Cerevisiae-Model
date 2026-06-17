@@ -1,13 +1,13 @@
 """
-Chemostat simulations:
-    - Dynamic time-evolution at fixed (D, Sf).
-    - Steady-state sweep over D for a given Sf.
-    - Computation of derived quantities (Dcrit, Dwashout, D_opt_biomass,
+Simulaciones de quimiostato:
+    - Evolución dinámica en el tiempo a (D, Sf) fijos.
+    - Barrido en estado estacionario sobre D para un Sf dado.
+    - Cálculo de cantidades derivadas (Dcrit, Dwashout, D_opt_biomass,
       D_opt_productivity).
 
-The ODE system can be integrated either with SciPy's LSODA (default, fast
-and adaptive) or with the project's classical RK4 implementation.  The
-caller selects the method through the ``solver`` argument.
+El sistema de EDOs puede integrarse con LSODA de SciPy (por defecto,
+rápido y adaptativo) o con la implementación clásica RK4 del proyecto.
+Quien llama selecciona el método mediante el argumento ``solver``.
 """
 
 from __future__ import annotations
@@ -33,7 +33,7 @@ def _safe(v):
 
 
 # ---------------------------------------------------------------------------
-# Single dynamic simulation
+# Simulación dinámica individual
 # ---------------------------------------------------------------------------
 def simulate_dynamic(D: float,
                      Sf: float,
@@ -43,7 +43,7 @@ def simulate_dynamic(D: float,
                      parameters: Optional[Dict[str, float]] = None,
                      solver: str = "lsoda",
                      rk4_step: float = 0.005) -> Dict:
-    """Integrate the chemostat from given initial conditions."""
+    """Integra el quimiostato partiendo de las condiciones iniciales dadas."""
     p = parameters or DEFAULT_PARAMETERS
     p_tuple = params_to_tuple(p)
     ic = y0 or {
@@ -82,12 +82,12 @@ def simulate_dynamic(D: float,
 
 
 # ---------------------------------------------------------------------------
-# Steady-state finder
+# Buscador del estado estacionario
 # ---------------------------------------------------------------------------
 def _settle_to_steady_state(D, Sf, p_tuple, y0, t_max=120.0,
                             t_check=20.0, tol=1e-3,
                             solver="lsoda", rk4_step=0.005):
-    """Integrate towards steady state, checking convergence periodically."""
+    """Integra hacia el estado estacionario, verificando la convergencia periódicamente."""
     y = np.asarray(y0, dtype=float).copy()
     n_checks = max(1, int(np.ceil(t_max / t_check)))
     for _ in range(n_checks):
@@ -111,7 +111,7 @@ def steady_state_sweep(Sf: float,
                        parameters: Optional[Dict[str, float]] = None,
                        solver: str = "lsoda",
                        rk4_step: float = 0.005) -> Dict:
-    """Sweep D using warm-start continuation, returning steady states."""
+    """Barre D usando continuación con warm-start y retorna los estados estacionarios."""
     p = parameters or DEFAULT_PARAMETERS
     p_tuple = params_to_tuple(p)
     Ds = np.linspace(D_min, D_max, n)
@@ -164,21 +164,22 @@ def steady_state_sweep(Sf: float,
 
 
 # ---------------------------------------------------------------------------
-# Operating regime characterisation
+# Caracterización del régimen de operación
 # ---------------------------------------------------------------------------
 def characterise_regime(sweep: Dict) -> Dict:
-    """Identify Dcrit, Dwashout, D_opt_biomass, D_opt_prod from a sweep.
+    """Identifica Dcrit, Dwashout, D_opt_biomass, D_opt_prod a partir de un barrido.
 
-    Dcrit is defined as the smallest D at which the steady-state ethanol
-    concentration exceeds a meaningful threshold.  Because the maximum
-    achievable ethanol scales with the feed concentration Sf (paper's
-    Fig. 11 makes this point explicit), a fixed absolute threshold gives
-    spurious results: at high Sf, even sub-critical operating points show
-    tiny amounts of ethanol from numerical artefacts of the integration.
+    Dcrit se define como el menor D al que la concentración de etanol en
+    estado estacionario supera un umbral significativo. Como el etanol
+    máximo alcanzable escala con la concentración de alimentación Sf (la
+    Fig. 11 del artículo lo deja claro), un umbral absoluto fijo da
+    resultados espurios: a Sf alto, incluso puntos de operación
+    sub-críticos muestran trazas de etanol por artefactos numéricos de la
+    integración.
 
-    We therefore use a **relative** threshold of 5% of the maximum
-    steady-state ethanol observed in the sweep, with an absolute floor of
-    0.1 g/L so the criterion stays sensible at very small Sf.
+    Por eso usamos un umbral **relativo** del 5% del etanol máximo en
+    estado estacionario observado en el barrido, con un piso absoluto de
+    0.1 g/L para que el criterio se mantenga razonable a Sf muy pequeño.
     """
     D   = np.array(sweep["D"])
     x   = np.array(sweep["x"])

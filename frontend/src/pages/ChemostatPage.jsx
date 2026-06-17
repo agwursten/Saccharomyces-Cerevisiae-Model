@@ -216,7 +216,7 @@ export default function ChemostatPage() {
               fontSize: '1.4rem',
             }}>
               <Box component="span">D&nbsp;=</Box>
-              {/* Fraction F/V using inline-grid: row 1 numerator, row 2 bar, row 3 denominator */}
+              {/* Fracción F/V usando inline-grid: fila 1 numerador, fila 2 barra, fila 3 denominador */}
               <Box sx={{
                 display: 'inline-grid',
                 gridTemplateRows: 'auto auto auto',

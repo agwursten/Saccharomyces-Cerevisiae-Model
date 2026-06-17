@@ -4,9 +4,10 @@ import { Card, CardContent, Typography, Box, Divider, useTheme } from '@mui/mate
 import { plotlyLayout } from '../theme/theme';
 
 /**
- * Normalise a Plotly axis title.  Plotly 2.x accepts either a string or an
- * object {text, font, standoff}; we always emit the object form so font and
- * spacing are consistent with the MUI theme.
+ * Normaliza el título de un eje de Plotly. Plotly 2.x acepta tanto un
+ * string como un objeto {text, font, standoff}; siempre emitimos la forma
+ * objeto para que la tipografía y el espaciado queden consistentes con el
+ * tema de MUI.
  */
 function axisTitle(t, isDark) {
   if (!t) return undefined;
@@ -25,9 +26,10 @@ function axisTitle(t, isDark) {
 }
 
 /**
- * Reusable Plotly card.  Pass `data`, `layout`, optional `title`/`subtitle`
- * for the card header and optional `explanation` to render a small italic
- * caption inside the same card (below the plot).
+ * Tarjeta reusable de Plotly. Recibe `data`, `layout`, opcionalmente
+ * `title`/`subtitle` para el encabezado de la tarjeta y opcionalmente
+ * `explanation` para renderizar una pequeña descripción en cursiva dentro
+ * de la misma tarjeta (debajo del gráfico).
  */
 export default function PlotCard({
   data, layout, title, subtitle, height = 320, config, explanation,
@@ -37,8 +39,9 @@ export default function PlotCard({
   const isDark = muiTheme.palette.mode === 'dark';
   const base = plotlyLayout(isDark);
 
-  // Merge user layout with the theme defaults, then *force* axis-title
-  // normalisation so labels always render in MUI-consistent typography.
+  // Mezcla el layout del usuario con los valores por defecto del tema, y
+  // luego *fuerza* la normalización del título de los ejes para que las
+  // etiquetas siempre se rendericen con la tipografía consistente con MUI.
   const userX = layout?.xaxis || {};
   const userY = layout?.yaxis || {};
   const userY2 = layout?.yaxis2;
@@ -66,7 +69,7 @@ export default function PlotCard({
       },
     } : {}),
     legend: { ...base.legend, ...(layout?.legend || {}) },
-    // Bottom margin slightly larger so x-axis title doesn't clip
+    // Margen inferior un poco mayor para que el título del eje x no se recorte
     margin: { ...base.margin, b: 56, ...(layout?.margin || {}) },
   };
 

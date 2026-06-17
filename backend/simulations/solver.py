@@ -1,17 +1,17 @@
 """
-Solver dispatcher.
+Dispatcher de solvers.
 
-The application supports two ODE integration methods:
+La aplicación soporta dos métodos de integración de EDOs:
 
-* ``"lsoda"`` — SciPy's LSODA (default).  Adaptive multi-step solver that
-  switches between stiff (BDF) and non-stiff (Adams) automatically.  Very
-  fast for this system because it can take large steps where the dynamics
-  are slow.
-* ``"rk4"``   — Classical fixed-step fourth-order Runge-Kutta.  Required
-  for the numerical-methods component of the project.  Slower than LSODA
-  but transparent and easy to inspect.
+* ``"lsoda"`` — LSODA de SciPy (por defecto). Solver multi-paso adaptativo
+  que cambia automáticamente entre rígido (BDF) y no rígido (Adams). Muy
+  rápido para este sistema porque puede dar pasos grandes donde la dinámica
+  es lenta.
+* ``"rk4"``   — Runge-Kutta clásico de cuarto orden con paso fijo.
+  Requerido para el componente de métodos numéricos del proyecto. Más
+  lento que LSODA pero transparente y fácil de inspeccionar.
 
-Use :func:`integrate` to get a uniform interface across both.
+Usar :func:`integrate` para tener una interfaz uniforme entre ambos.
 """
 
 from __future__ import annotations
@@ -30,14 +30,14 @@ def integrate(f: Callable,
               method: str = "lsoda",
               rk4_step: float = 0.005) -> Tuple[np.ndarray, np.ndarray]:
     """
-    Unified integration interface.
+    Interfaz unificada de integración.
 
-    Parameters
+    Parámetros
     ----------
     method : {"lsoda", "rk4"}
-        Numerical method to use.
+        Método numérico a usar.
     rk4_step : float
-        Step size when ``method == "rk4"``. Ignored otherwise.
+        Tamaño de paso cuando ``method == "rk4"``. Se ignora en otro caso.
 
     Returns
     -------
@@ -48,9 +48,9 @@ def integrate(f: Callable,
     if method == "rk4":
         return rk4_integrate(f, t_span, y0, args=args, h=rk4_step, t_eval=t_eval)
 
-    # Default: LSODA via SciPy's solve_ivp (adaptive, handles stiffness).
-    # The "out" kwarg of the tuple-RHS gets in the way of solve_ivp, so we
-    # wrap it.
+    # Por defecto: LSODA vía solve_ivp de SciPy (adaptativo, maneja rigidez).
+    # El kwarg "out" del RHS basado en tupla estorba a solve_ivp, así que lo
+    # envolvemos.
     def _wrapped(t, y):
         return f(t, y, *args)
 

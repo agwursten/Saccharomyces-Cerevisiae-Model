@@ -1,1 +1,1 @@
-"""Simulation routines for chemostat, batch and bifurcation analysis."""
+"""Rutinas de simulación para quimiostato, batch y análisis de bifurcación."""

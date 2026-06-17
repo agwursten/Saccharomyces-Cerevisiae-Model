@@ -1,31 +1,32 @@
 import { createTheme } from '@mui/material/styles';
 
 /**
- * The palette is built around a deep eucalyptus/forest-green that nods to
- * the yeast/lab subject matter, with a saturated amber-yellow used sparingly
- * as the single accent for "alcoholic fermentation" highlights.
+ * La paleta se construye en torno a un verde eucalipto / bosque profundo
+ * que alude al tema de levaduras / laboratorio, con un amarillo ámbar
+ * saturado usado de manera contenida como único acento para los
+ * destacados de "fermentación alcohólica".
  *
- * We expose both light and dark variants. The dark variant is the default —
- * it is the one most scientific tooling (Plotly Dash, COMSOL studies, etc.)
- * tends to look best in.
+ * Se exponen tanto la variante clara como la oscura. La variante oscura
+ * es la predeterminada — es la que la mayoría del tooling científico
+ * (Plotly Dash, estudios de COMSOL, etc.) tiende a lucir mejor.
  */
 const colors = {
-  // Brand
-  brand:       '#3aa37a',   // eucalyptus
+  // Marca
+  brand:       '#3aa37a',   // eucalipto
   brandDark:   '#1f6d4d',
   brandLight:  '#7cd3ad',
-  accent:      '#f0b441',   // ethanol amber
+  accent:      '#f0b441',   // ámbar etanol
   accentDeep:  '#c78a1f',
   danger:      '#e07060',
   warning:     '#e0b04a',
 
-  // Dark surfaces
+  // Superficies oscuras
   bgDark:      '#0b1117',
   surfaceDark: '#141c25',
   panelDark:   '#1b2531',
   borderDark:  'rgba(255,255,255,0.08)',
 
-  // Light surfaces
+  // Superficies claras
   bgLight:      '#f7f6f1',
   surfaceLight: '#ffffff',
   panelLight:   '#fbfaf6',
@@ -114,7 +115,7 @@ export const buildTheme = (mode = 'dark') => {
 export const palette = colors;
 
 /**
- * Plotly layout & color palette helpers, kept in sync with MUI.
+ * Helpers de layout y paleta de Plotly, mantenidos en sintonía con MUI.
  */
 export const plotlyLayout = (isDark) => ({
   paper_bgcolor:  'rgba(0,0,0,0)',
@@ -125,14 +126,14 @@ export const plotlyLayout = (isDark) => ({
     size:   12,
   },
   colorway: [
-    colors.brand,        // green   (biomass)
-    colors.accent,       // amber   (ethanol)
-    '#5b9bd5',           // blue    (glucose)
-    '#b56fc8',           // purple  (acetaldehyde)
-    '#e07060',           // red     (pyruvate)
-    '#62c9bd',           // teal    (acetate)
-    '#d09cf0',           // lavender (Xa)
-    '#e8c44e',           // gold   (XAcdh)
+    colors.brand,        // verde    (biomasa)
+    colors.accent,       // ámbar    (etanol)
+    '#5b9bd5',           // azul     (glucosa)
+    '#b56fc8',           // violeta  (acetaldehído)
+    '#e07060',           // rojo     (piruvato)
+    '#62c9bd',           // turquesa (acetato)
+    '#d09cf0',           // lavanda  (Xa)
+    '#e8c44e',           // dorado   (XAcdh)
   ],
   margin: { l: 55, r: 16, t: 36, b: 44 },
   xaxis: {

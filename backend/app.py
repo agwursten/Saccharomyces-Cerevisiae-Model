@@ -1,16 +1,17 @@
 """
-FastAPI entry-point for the Lei et al. (2001) yeast-model exploration tool.
+Punto de entrada FastAPI para la herramienta de exploración del modelo de
+levadura de Lei et al. (2001).
 
-Run with::
+Ejecutar con::
 
     uvicorn app:app --reload --port 8000
 
-The API exposes endpoints for:
-    - Parameter management (defaults + validation).
-    - Chemostat: dynamic simulation, steady-state sweep, regime analysis.
-    - Batch simulation.
-    - Bifurcation diagrams.
-    - Reproduction of the paper figures.
+La API expone endpoints para:
+    - Gestión de parámetros (valores por defecto + validación).
+    - Quimiostato: simulación dinámica, barrido en estado estacionario, análisis de régimen.
+    - Simulación batch.
+    - Diagramas de bifurcación.
+    - Reproducción de las figuras del artículo.
 """
 
 from __future__ import annotations
@@ -23,7 +24,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, validator
 
-# Make the package importable when running as a script
+# Hace que el paquete sea importable cuando se ejecuta como script
 sys.path.insert(0, os.path.dirname(__file__))
 
 from models.parameters import (
@@ -48,7 +49,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Allow the React dev server to talk to us
+# Permite que el servidor de desarrollo de React se comunique con nosotros
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -58,10 +59,10 @@ app.add_middleware(
 
 
 # ===========================================================================
-# Pydantic schemas
+# Esquemas Pydantic
 # ===========================================================================
 class ParametersOverride(BaseModel):
-    """Optional subset of kinetic parameters that overrides the defaults."""
+    """Subconjunto opcional de parámetros cinéticos que sobreescribe los valores por defecto."""
     overrides: Optional[Dict[str, float]] = None
 
     def merged(self) -> Dict[str, float]:
@@ -126,7 +127,7 @@ class MultiplicityRequest(ParametersOverride):
 
 
 # ===========================================================================
-# Health / metadata
+# Salud / metadatos
 # ===========================================================================
 @app.get("/api/health")
 def health():
@@ -144,7 +145,7 @@ def parameter_defaults():
 
 @app.get("/api/parameters/info")
 def parameter_info():
-    """Human-readable description of each parameter (used by tooltips)."""
+    """Descripción legible de cada parámetro (usada por los tooltips)."""
     descriptions = {
         "k1h": "High-affinity glucose uptake rate constant.",
         "K1h": "High-affinity glucose half-saturation constant.",
@@ -188,7 +189,7 @@ def parameter_info():
 
 
 # ===========================================================================
-# Chemostat endpoints
+# Endpoints del quimiostato
 # ===========================================================================
 @app.post("/api/chemostat/dynamic")
 def chemostat_dynamic(req: DynamicRequest):
@@ -229,7 +230,7 @@ def batch_simulate(req: BatchRequest):
 
 
 # ===========================================================================
-# Bifurcation
+# Bifurcación
 # ===========================================================================
 @app.post("/api/bifurcation/diagram")
 def bifurcation(req: BifurcationRequest):
@@ -251,17 +252,17 @@ def multiplicity(req: MultiplicityRequest):
 
 
 # ===========================================================================
-# Paper figure reproductions
+# Reproducciones de las figuras del artículo
 # ===========================================================================
-# Cache figure data after the first computation so subsequent clicks are
-# instantaneous. The figures use the DEFAULT_PARAMETERS so the result is
-# deterministic.
+# Se cachean los datos de las figuras después del primer cálculo para que los
+# clics subsiguientes sean instantáneos. Las figuras usan DEFAULT_PARAMETERS,
+# por lo que el resultado es determinista.
 _FIG_CACHE: Dict[str, dict] = {}
 
 
 @app.get("/api/figures/fig3")
 def fig3():
-    """Steady-state chemostat at Sf=15 g/L (Fig. 3 of the paper)."""
+    """Quimiostato en estado estacionario a Sf=15 g/L (Fig. 3 del artículo)."""
     if "fig3" not in _FIG_CACHE:
         _FIG_CACHE["fig3"] = steady_state_sweep(Sf=15.0, D_min=0.05, D_max=0.50, n=80)
     return _FIG_CACHE["fig3"]
@@ -269,7 +270,7 @@ def fig3():
 
 @app.get("/api/figures/fig4")
 def fig4():
-    """Steady-state pyruvate / acetaldehyde / acetate / Xa / XAcdh (Fig. 4)."""
+    """Piruvato / acetaldehído / acetato / Xa / XAcdh en estado estacionario (Fig. 4)."""
     if "fig3" not in _FIG_CACHE:
         _FIG_CACHE["fig3"] = steady_state_sweep(Sf=15.0, D_min=0.05, D_max=0.50, n=80)
     return _FIG_CACHE["fig3"]
@@ -277,7 +278,7 @@ def fig4():
 
 @app.get("/api/figures/fig5")
 def fig5():
-    """Batch simulation, Sglu0=15 g/L (Fig. 5)."""
+    """Simulación batch, Sglu0=15 g/L (Fig. 5)."""
     if "fig5" not in _FIG_CACHE:
         _FIG_CACHE["fig5"] = simulate_batch(t_end=35.0, n_points=700)
     return _FIG_CACHE["fig5"]
@@ -285,7 +286,7 @@ def fig5():
 
 @app.get("/api/figures/fig10A")
 def fig10A():
-    """Bifurcation diagram, Sf=30 g/L (Fig. 10A)."""
+    """Diagrama de bifurcación, Sf=30 g/L (Fig. 10A)."""
     if "fig10A" not in _FIG_CACHE:
         _FIG_CACHE["fig10A"] = bifurcation_diagram(
             Sf=30.0, D_min=0.28, D_max=0.44, n=50,
@@ -295,7 +296,7 @@ def fig10A():
 
 @app.get("/api/figures/fig10B")
 def fig10B():
-    """Multiplicity region in (Sf, D) plane (Fig. 10B)."""
+    """Región de multiplicidad en el plano (Sf, D) (Fig. 10B)."""
     if "fig10B" not in _FIG_CACHE:
         _FIG_CACHE["fig10B"] = multiplicity_region([16, 20, 30, 50, 80, 120, 160])
     return _FIG_CACHE["fig10B"]
@@ -303,7 +304,7 @@ def fig10B():
 
 @app.get("/api/figures/fig11")
 def fig11():
-    """Acetaldehyde vs D for three Sf values (Fig. 11)."""
+    """Acetaldehído vs D para tres valores de Sf (Fig. 11)."""
     if "fig11" not in _FIG_CACHE:
         out = {}
         for Sf in [15.0, 30.0, 100.0]:
@@ -314,7 +315,8 @@ def fig11():
 
 
 # ===========================================================================
-# Static frontend (when bundled). Keep this LAST so /api routes win.
+# Frontend estático (cuando está empaquetado). Se mantiene al FINAL para que
+# las rutas /api tengan prioridad.
 # ===========================================================================
 from fastapi.staticfiles import StaticFiles
 _static_dir = os.path.join(os.path.dirname(__file__), "static")

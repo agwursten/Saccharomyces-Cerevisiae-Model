@@ -1,11 +1,12 @@
 """
-Reaction-rate expressions r1 - r11 of the Lei et al. (2001) yeast model.
+Expresiones de velocidad de las reacciones r1 - r11 del modelo de levadura
+de Lei et al. (2001).
 
-Each function receives the current state and returns a positive scalar
-(units: g substrate g-biomass^-1 h^-1 for substrate-related rates;
-g compartment g-biomass^-1 h^-1 for compartmental rates).
+Cada función recibe el estado actual y retorna un escalar positivo
+(unidades: g sustrato·g-biomasa⁻¹·h⁻¹ para velocidades relacionadas con sustratos;
+g compartimento·g-biomasa⁻¹·h⁻¹ para velocidades de los compartimentos).
 
-All expressions are taken from Table 5 of the paper.
+Todas las expresiones se tomaron de la Tabla 5 del artículo.
 """
 
 from __future__ import annotations
@@ -13,15 +14,15 @@ import math
 
 
 # ---------------------------------------------------------------------------
-# Catabolic reactions
+# Reacciones catabólicas
 # ---------------------------------------------------------------------------
 def r1(state, p):
     """
-    Glucose uptake / glycolysis.
+    Captación de glucosa / glucólisis.
 
-    Three additive terms: low-affinity uptake, high-affinity uptake, and
-    an acetaldehyde-activated excess-uptake term that triggers the shift
-    to oxido-reductive metabolism.
+    Tres términos aditivos: captación de baja afinidad, captación de alta
+    afinidad y un término de captación excesiva activado por acetaldehído
+    que dispara el cambio al metabolismo óxido-reductivo.
     """
     s_glu     = max(state["s_glu"],     0.0)
     s_acetald = max(state["s_acetald"], 0.0)
@@ -38,7 +39,7 @@ def r1(state, p):
 
 
 def r2(state, p):
-    """Pyruvate oxidation through the Pdh complex (with glucose repression)."""
+    """Oxidación del piruvato a través del complejo Pdh (con represión por glucosa)."""
     s_pyr = max(state["s_pyr"], 0.0)
     s_glu = max(state["s_glu"], 0.0)
     Xa    = state["Xa"]
@@ -46,7 +47,7 @@ def r2(state, p):
 
 
 def r3(state, p):
-    """Pyruvate -> acetaldehyde via Pdc, modelled with a Hill order of 4."""
+    """Piruvato -> acetaldehído vía Pdc, modelado con cinética de Hill de orden 4."""
     s_pyr = max(state["s_pyr"], 0.0)
     Xa    = state["Xa"]
     spyr4 = s_pyr ** 4
@@ -55,9 +56,9 @@ def r3(state, p):
 
 def r4(state, p):
     """
-    Acetaldehyde -> acetate via Acdh.
-    Linear dependence on the Acdh compartment to capture isoenzyme-level
-    capacity variations.
+    Acetaldehído -> acetato vía Acdh.
+    Dependencia lineal del compartimento Acdh para capturar las
+    variaciones de capacidad a nivel de isoenzimas.
     """
     s_a = max(state["s_acetald"], 0.0)
     Xa, XAcdh = state["Xa"], state["XAcdh"]
@@ -66,10 +67,11 @@ def r4(state, p):
 
 def r5(state, p):
     """
-    Acetate -> acetyl-CoA via Acs (two isoenzymes).
+    Acetato -> acetil-CoA vía Acs (dos isoenzimas).
 
-    First term (Acs2p) is always active; second term (Acs1p) is repressed
-    by glucose so it only contributes during ethanol growth.
+    El primer término (Acs2p) siempre está activo; el segundo término
+    (Acs1p) está reprimido por glucosa, por lo que sólo contribuye durante
+    el crecimiento sobre etanol.
     """
     s_ac  = max(state["s_acetate"], 0.0)
     s_glu = max(state["s_glu"],     0.0)
@@ -84,7 +86,7 @@ def r5(state, p):
 
 
 def r6(state, p):
-    """Reversible acetaldehyde <-> ethanol via Adh."""
+    """Reacción reversible acetaldehído <-> etanol vía Adh."""
     s_a = max(state["s_acetald"], 0.0)
     s_e = max(state["s_EtOH"],    0.0)
     Xa  = state["Xa"]
@@ -95,10 +97,10 @@ def r6(state, p):
 
 
 # ---------------------------------------------------------------------------
-# Anabolic reactions
+# Reacciones anabólicas
 # ---------------------------------------------------------------------------
 def r7(state, p):
-    """Anabolism from glucose -> active compartment Xa."""
+    """Anabolismo desde glucosa -> compartimento activo Xa."""
     s_glu = max(state["s_glu"], 0.0)
     Xa    = state["Xa"]
     return p["k7"] * s_glu / (s_glu + p["K7"]) * Xa
@@ -106,8 +108,8 @@ def r7(state, p):
 
 def r8(state, p):
     """
-    Anabolism from acetate -> Xa (glucose-repressed; shares affinity with
-    the Acs1p term in r5).
+    Anabolismo desde acetato -> Xa (reprimido por glucosa; comparte la
+    afinidad con el término Acs1p de r5).
     """
     s_ac  = max(state["s_acetate"], 0.0)
     s_glu = max(state["s_glu"],     0.0)
@@ -120,14 +122,14 @@ def r8(state, p):
 
 
 # ---------------------------------------------------------------------------
-# Compartment dynamics
+# Dinámica de los compartimentos
 # ---------------------------------------------------------------------------
 def r9(state, p):
     """
-    Synthesis of the acetaldehyde-dehydrogenase compartment.
+    Síntesis del compartimento de acetaldehído-deshidrogenasa.
 
-    Two activating terms (glucose-Monod with inhibition and ethanol-Monod
-    with the same inhibition), plus a small constitutive term.
+    Dos términos activadores (Monod en glucosa con inhibición y Monod en
+    etanol con la misma inhibición), más un pequeño término constitutivo.
     """
     s_glu = max(state["s_glu"],  0.0)
     s_e   = max(state["s_EtOH"], 0.0)
@@ -143,7 +145,7 @@ def r9(state, p):
 
 
 def r10(state, p):
-    """First-order decay of the active compartment Xa."""
+    """Decaimiento de primer orden del compartimento activo Xa."""
     s_glu = max(state["s_glu"],  0.0)
     s_e   = max(state["s_EtOH"], 0.0)
     Xa    = state["Xa"]
@@ -153,12 +155,12 @@ def r10(state, p):
 
 
 def r11(state, p):
-    """First-order decay of the Acdh compartment."""
+    """Decaimiento de primer orden del compartimento Acdh."""
     return p["k11"] * state["XAcdh"]
 
 
 # ---------------------------------------------------------------------------
-# Convenience: evaluate every rate and return as a dict
+# Utilidad: evalúa todas las velocidades y las retorna como un diccionario
 # ---------------------------------------------------------------------------
 def evaluate_all(state, p):
     return {

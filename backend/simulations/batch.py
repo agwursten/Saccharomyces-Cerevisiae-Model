@@ -1,6 +1,6 @@
 """
-Batch simulations: D = 0, no feed/outlet.
-Supports both LSODA (fast, adaptive) and RK4 (classical fixed-step).
+Simulaciones batch: D = 0, sin alimentación ni salida.
+Soporta tanto LSODA (rápido, adaptativo) como RK4 (clásico de paso fijo).
 """
 
 from __future__ import annotations
@@ -21,7 +21,7 @@ def simulate_batch(t_end: float = 30.0,
                    parameters: Optional[Dict[str, float]] = None,
                    solver: str = "lsoda",
                    rk4_step: float = 0.005) -> Dict:
-    """Integrate a batch run from the supplied initial conditions."""
+    """Integra una corrida batch a partir de las condiciones iniciales provistas."""
     p = parameters or DEFAULT_PARAMETERS
     p_tuple = params_to_tuple(p)
     ic = {**DEFAULT_INITIAL_CONDITIONS, **(initial_conditions or {})}

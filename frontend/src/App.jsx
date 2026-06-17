@@ -9,8 +9,8 @@ import BatchPage from './pages/BatchPage';
 import ParametersPage from './pages/ParametersPage';
 
 /**
- * Global app context: parameter overrides plus solver configuration.
- * Both propagate through every page that calls the backend.
+ * Contexto global de la app: overrides de parámetros más la configuración
+ * del solver. Ambos se propagan a todas las páginas que llaman al backend.
  */
 export const AppContext = createContext({
   overrides: {},

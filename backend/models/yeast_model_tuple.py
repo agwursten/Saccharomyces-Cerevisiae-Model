@@ -1,18 +1,20 @@
 """
-Helper that flattens the parameter dict into an ordered tuple,
-plus a tuple-based RHS that avoids dict lookups in the hot loop.
+Función auxiliar que aplana el diccionario de parámetros en una tupla
+ordenada, más un RHS basado en tuplas que evita búsquedas en diccionarios
+dentro del bucle caliente.
 
-For 40k integration steps with 4 RHS calls each, dict-based access adds
-~70% of the total wall-clock time on CPython. The tuple-based RHS below
-is mathematically identical but ~3x faster.
+Para 40k pasos de integración con 4 llamadas al RHS por paso, el acceso
+basado en diccionarios suma ~70% del tiempo total de reloj en CPython.
+El RHS basado en tupla de abajo es matemáticamente idéntico pero ~3 veces
+más rápido.
 """
 
 from __future__ import annotations
 import numpy as np
 
 
-# Index map for the parameter tuple (order matters: do not change without
-# updating ``params_to_tuple`` and ``rhs_tuple``).
+# Mapa de índices para la tupla de parámetros (el orden importa: no cambiar
+# sin actualizar también ``params_to_tuple`` y ``rhs_tuple``).
 _PARAM_KEYS = (
     "k1h", "K1h", "k1l", "K1l", "k1e", "K1e", "K1i",      # r1
     "k2", "K2", "K2i",                                     # r2
@@ -29,14 +31,15 @@ _PARAM_KEYS = (
 
 
 def params_to_tuple(p: dict) -> tuple:
-    """Convert the parameter dict to a flat tuple in the canonical order."""
+    """Convierte el diccionario de parámetros a una tupla plana en el orden canónico."""
     return tuple(p[k] for k in _PARAM_KEYS)
 
 
 def rhs_tuple(t, y, p, D=0.0, s_glu_in=0.0, out=None):
     """
-    Same equations as :func:`rhs_fast` but with the parameter tuple
-    unpacked in one line, eliminating dict lookups entirely.
+    Mismas ecuaciones que :func:`rhs_fast` pero con la tupla de parámetros
+    desempaquetada en una sola línea, eliminando por completo las búsquedas
+    en diccionarios.
     """
     (k1h, K1h, k1l, K1l, k1e, K1e, K1i,
      k2, K2, K2i,
