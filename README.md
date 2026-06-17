@@ -2,7 +2,7 @@
 
 Aplicación web para simular y explorar el modelo bioquímicamente estructurado de *Saccharomyces cerevisiae* descrito en:
 
-> Lei, F., Rotbøll, M., Jørgensen, S.B. *A biochemically structured model for Saccharomyces cerevisiae*, **Journal of Biotechnology 88 (2001) 205–221 DOI: <a href="10.1016/s0168-1656(01)00269-3"> 10.1016/s0168-1656(01)00269-3</a>**.
+> Lei, F., Rotbøll, M., Jørgensen, S.B. *A biochemically structured model for Saccharomyces cerevisiae*, **Journal of Biotechnology 88 (2001) 205–221 DOI: <a href="doi.org/10.1016/s0168-1656(01)00269-3"> 10.1016/s0168-1656(01)00269-3</a>**.
 <p align="center">
 <img width="358" height="232" alt="{89015DF8-397D-4737-AD9A-93170A6E9F1C}" src="https://github.com/user-attachments/assets/c15b5ccc-9129-4ad7-b63a-e225fb0c12c4" />
 </p>
