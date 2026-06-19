@@ -1,6 +1,6 @@
 # Saccharomyces Cerevisiae Model Explorer 🧪 ⚗
 
-Aplicación web para simular y explorar el modelo bioquímicamente estructurado de *Saccharomyces cerevisiae* descrito en:
+Aplicación web para simular y explorar el modelo bioquímicamente estructurado de *Saccharomyces cerevisiae* descrito en..:
 
 > Lei, F., Rotbøll, M., Jørgensen, S.B. *A biochemically structured model for Saccharomyces cerevisiae*, **Journal of Biotechnology 88 (2001) 205–221 DOI: <a href="https://doi.org/10.1016/S0168-1656(01)00269-3"> 10.1016/s0168-1656(01)00269-3</a>**.
 <p align="center">
