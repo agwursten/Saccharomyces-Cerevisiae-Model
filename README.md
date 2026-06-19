@@ -80,7 +80,7 @@ yeast_app/
 
 ## 🖱 Instalación y ejecución
 
-Primero necesitas tener instalado <a href="https://www.python.org/">**Python ≥ 3.11**</a> y <a href="https://nodejs.org/es">**Node ≥ 18**</a>. Luego sigue los pasos siguientes:
+Primero necesitas tener instalado <a href="https://www.python.org/">**Python</a> ≥ 3.11** y <a href="https://nodejs.org/es">**Node</a> ≥ 18**. Luego sigue los pasos siguientes:
 
 ### 1. Backend
 
